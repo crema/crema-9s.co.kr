@@ -1,0 +1,88 @@
+<%
+hide_image = false if !local_assigns[:hide_image]
+product_url = review.product_url || (review.product ? review.product.url : nil)
+user_grade_icon_url = review.user_grade_icon_url
+display_user_grade = @brand.review_author_display_type == ReviewAuthorDisplayType::USER_GRADE && @brand.brand_user_grade_display_type_in_reviews_index != BrandUserGradeDisplayType::NONE
+display_user_grade_icon = user_grade_icon_url.present? && @brand.brand_user_grade_display_type_in_reviews_index == BrandUserGradeDisplayType::TEXT_WITH_ICON
+%>
+<%= content_tag_for :li, review, data: {product_url: product_url, expand_url: expand_review_path(review, widget_id: widget.id)} do %>
+  <% if !hide_image %>
+    <% if product_url %>
+      <% if review.photo? %>
+        <a class="image photo-review-popup" data-photo-review-popup-url="<%= photo_review_popup_review_path(review)%>" >
+      <% else %>
+        <span class="image">
+      <% end %>
+        <%= image_tag review.product_image_url, class: 'smooth', alt: review.product_name, width: 90, height: 90 %>
+      </span>
+      <%end%>
+  <% end %>
+  <%= content_tag :div, class: "l-contents panel #{'with-image' if !hide_image} #{'photo-review' if review.images_count > 0}" do %>
+    <div class="panel-heading no-border score">
+      <div class="star-wrap">
+        <%= render 'reviews/score', review: review %>
+      </div>
+    </div>
+    <div class="review-content">
+      <% if review.photo? %>
+      <a class="review-content-inner photo-review-popup" data-photo-review-popup-url="<%= photo_review_popup_review_path(review)%>" >
+      <%else%>
+      <a class="review-content-inner review-content-collapsed link-expand">
+      <%end%>
+        <div class="panel-body no-border">
+          <div class="message">
+            <span>
+              <% if widget.review_message_all_collapsed? %>
+                <%= widget.collapsed_title %>
+              <% else %>
+                <%= review.review_title %>
+              <% end %>
+              <%= content_tag(:span, t('reviews.see_more'), class: 'mall-link-color see-more') if review.show_see_more? %>
+              <br>
+            </span>
+          </div>
+        </div>
+        <div class="panel-footer no-border">
+          <div class="actions-container">
+            <div class="inline">
+              <%= content_tag :span, class: 'mall-link-color comments-link' do %>
+                <%= t('reviews.index.comments_count_html', count: review.comments_count) %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </a>
+      <div class="review-content-inner review-content-expanded"></div>
+       <a>
+        <div class="panel-heading no-border score review-content-product-name">
+          <%= content_tag :div, class: "name #{'name-with-new-tag' if review.new?} #{'name-with-camera-icon' if review.images_count > 0}" do %>
+          <a class="link-product">
+            <%= review.product_name %>
+          </a>
+          <%= render 'reviews/tags', review: review %>
+          <% end %>
+        </div>
+      </a>
+    </div>
+  <% end %>
+  <div class="r-contents">
+    <div class="info-container">
+      <span class="name"><%= review_user_display_name(review) %></span>
+      <% if review.display_user_grade? && display_user_grade %>
+        <span class="user-grade">
+          &nbsp;
+          [
+          <% if display_user_grade_icon %>
+            <%= image_tag user_grade_icon_url, class: 'user-grade-icon' %>
+          <% end %>
+          <%= review.brand_user_grade_name %>
+          ]
+        </span>
+      <% end %>
+      <% if @brand.review_show_created_at %>
+        <span class="date"><%= review.created_at.strftime("%Y. %m. %d") %></span>
+      <% end %>
+    </div>
+    <%= render 'reviews/images', review: review %>
+  </div>
+<% end %>
