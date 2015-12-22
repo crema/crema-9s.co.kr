@@ -58,7 +58,7 @@ display_user_grade_icon = user_grade_icon_url.present? && @brand.brand_user_grad
       <% end %>
       <div class="review-content-inner review-content-expanded"></div>
     </div>
-    <div class="panel-heading no-border">
+    <div class="panel-heading no-border review-content-product-name">
       <%= content_tag :div, class: "name #{'name-with-new-tag' if review.new?} #{'name-with-camera-icon' if review.images_count > 0}" do %>
         <a class="link-product"><%= review.product_name %></a>
         <%= render 'reviews/tags', review: review %>
@@ -66,23 +66,25 @@ display_user_grade_icon = user_grade_icon_url.present? && @brand.brand_user_grad
     </div>
   <% end %>
   <div class="r-contents">
-    <div class="info-container">
-      <span class="name"><%= review_user_display_name(review) %></span>
-      <% if review.display_user_grade? && display_user_grade %>
-        <span class="user-grade">
-          &nbsp;
-          [
-          <% if display_user_grade_icon %>
-            <%= image_tag user_grade_icon_url, class: 'user-grade-icon' %>
-          <% end %>
-          <%= review.brand_user_grade_name %>
-          ]
-        </span>
-      <% end %>
-      <% if @brand.review_show_created_at %>
-        <span class="date"><%= review.created_at.strftime("%Y. %m. %d") %></span>
-      <% end %>
-    </div>
-    <%= render 'reviews/images', review: review %>
+    <table>
+      <tr><td><%= render 'reviews/images', review: review %></td></tr>
+      <tr><td><div class="info-container">
+        <span class="name" align="bottom"><%= review_user_display_name(review) %></span>
+        <% if review.display_user_grade? && display_user_grade %>
+          <span class="user-grade">
+            &nbsp;
+            [
+            <% if display_user_grade_icon %>
+              <%= image_tag user_grade_icon_url, class: 'user-grade-icon' %>
+            <% end %>
+            <%= review.brand_user_grade_name %>
+            ]
+          </span>
+        <% end %>
+        <% if @brand.review_show_created_at %>
+          <span class="date"><%= review.created_at.strftime("%Y. %m. %d") %></span>
+        <% end %>
+      </div></td></tr>
+  </table>
   </div>
 <% end %>
