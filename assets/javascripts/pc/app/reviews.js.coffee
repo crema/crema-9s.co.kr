@@ -34,6 +34,10 @@ class Reviews
     args.elements.find(".link-expand").click ->
       $review = $(this).closest(".review")
       $review_content = $review.find(".review-content")
+      if args.elements.find(".expanded").length > 0
+        collapse args.elements.find(".expanded")
+        return
+
       if $review_content.hasClass("expanded")
         collapse($review_content) if $review_content.data("toggle")
       else

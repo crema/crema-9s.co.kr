@@ -76,13 +76,12 @@ li.review {
       @include inline-block;
       position: relative;
 
-      .link-product {
+      .product-name {
         display: block;
         color: #323232;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        font-weight: bold;
         vertical-align: middle;
       }
 
@@ -281,6 +280,7 @@ li.review {
 
     .panel-body {
       padding-bottom: 5px;
+      font-weight: bold;
     }
 
     .panel-footer {

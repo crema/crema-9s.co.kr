@@ -3,12 +3,6 @@
   <%= render 'reviews/message', review: review %>
   <%= render 'reviews/images', review: review, li_class: 'grid-4 review_expanded__thumbnail', ul_class: 'images review_expanded__thumbnails_container' %>
 </div>
-<div class="panel-heading no-border">
-<%= content_tag :div, class: "name #{'name-with-new-tag' if review.new?} #{'name-with-camera-icon' if review.images_count > 0}" do %>
-  <%= content_tag :a, review.product_name, class: "link-product", :href => review.product_url %>
-  <%= render 'reviews/tags', review: review %>
-<% end %>
-</div>
 <div class="panel-footer no-border">
   <div class="actions-container">
     <div class="inline">

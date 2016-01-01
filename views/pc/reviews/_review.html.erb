@@ -12,12 +12,20 @@ display_user_grade_icon = user_grade_icon_url.present? && @brand.brand_user_grad
       <% if review.photo? %>
         <%= content_tag :a, image_tag_str, class: 'image photo-review-popup', data: {photo_review_popup_url: photo_review_popup_review_path(review)} %>
       <% else %>
-        <span class="image"><%= image_tag_str %></span>
+        <a class="image link-expand"><%= image_tag_str %></a>
       <% end %>
     <% end %>
   <% end %>
   <%= content_tag :div, class: "l-contents panel #{'with-image' if !hide_image} #{'photo-review' if review.images_count > 0}" do %>
     <div class="panel-heading no-border score">
+    <%= content_tag :div, class: "name #{'name-with-new-tag' if review.new?} #{'name-with-camera-icon' if review.images_count > 0}" do %>
+        <% if review.photo? %>
+          <%= content_tag :a, review.product_name, class: 'product-name photo-review-popup', data: {photo_review_popup_url: photo_review_popup_review_path(review)} %>
+        <% else %>
+          <a class="product-name link-expand"><%= review.product_name %></a>
+        <% end %>
+        <%= render 'reviews/tags', review: review %>
+      <% end %>
       <div class="star-wrap">
         <%= render 'reviews/score', review: review %>
       </div>
@@ -57,12 +65,6 @@ display_user_grade_icon = user_grade_icon_url.present? && @brand.brand_user_grad
         </div>
       <% end %>
       <div class="review-content-inner review-content-expanded"></div>
-    </div>
-    <div class="panel-heading no-border review-content-product-name">
-      <%= content_tag :div, class: "name #{'name-with-new-tag' if review.new?} #{'name-with-camera-icon' if review.images_count > 0}" do %>
-        <a class="link-product"><%= review.product_name %></a>
-        <%= render 'reviews/tags', review: review %>
-      <% end %>
     </div>
   <% end %>
   <div class="r-contents">
