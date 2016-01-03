@@ -243,6 +243,10 @@ li.review {
       }
     }
 
+    table.r-contents-table {
+      border-spacing: 0px;
+    }
+
     .pinned {
       text-align: right;
       padding-top: 6px;
@@ -252,14 +256,14 @@ li.review {
       @include clearfix;
       float: right;
       margin: 11px -2px 0 -2px;
-      width: 70px;
-      height: 70px;
+      width: 60px;
+      height: 60px;
     }
 
     ul.images {
       @include clearfix;
       float: right;
-      margin: 11px -2px 0 -2px;
+      margin: 0 -2px 0 -2px;
 
       li {
         padding: 4px 2px;
@@ -267,8 +271,8 @@ li.review {
         border: 0;
 
         img {
-          width: 70px;
-          height: 70px;
+          width: 60px;
+          height: 60px;
         }
       }
     }
