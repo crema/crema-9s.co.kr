@@ -77,12 +77,21 @@ li.review {
       position: relative;
 
       .product-name {
-        display: block;
+        display: inline;
         color: #323232;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         vertical-align: middle;
+      }
+
+      .product-link {
+        display:inline;
+        color: black;
+        border-style: solid;
+        border-width: 1px;
+        border-color: #999;
+        font-size: 11px;
       }
 
       .review-tags {
