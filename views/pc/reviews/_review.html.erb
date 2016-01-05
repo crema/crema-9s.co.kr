@@ -24,7 +24,7 @@ display_user_grade_icon = user_grade_icon_url.present? && @brand.brand_user_grad
         <% else %>
           <a class="product-name link-expand"><%= review.product_name %></a>
         <% end %>
-        <%= link_to '상품 보러 가기', review.product_url, class: 'product-link' %>
+        <%= link_to '상품 보러가기', review.product_url, class: 'a9s_product_link' %>
         <%= render 'reviews/tags', review: review %>
       <% end %>
       <div class="star-wrap">
