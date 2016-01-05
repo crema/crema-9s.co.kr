@@ -8,29 +8,37 @@ display_user_grade_icon = user_grade_icon_url.present? && @brand.brand_user_grad
 <%= content_tag_for :li, review, data: {product_url: product_url, expand_url: expand_review_path(review, widget_id: widget.id)} do %>
   <% if !hide_image %>
     <% if product_url %>
+      <% image_tag_str = image_tag(review.product_image_url, class: 'smooth', alt: review.product_name, width: 90, height: 90) %>
       <% if review.photo? %>
-        <a class="image photo-review-popup" data-photo-review-popup-url="<%= photo_review_popup_review_path(review)%>" >
+        <%= content_tag :a, image_tag_str, class: 'image photo-review-popup', data: {photo_review_popup_url: photo_review_popup_review_path(review)} %>
       <% else %>
-        <span class="image">
+        <a class="image link-expand"><%= image_tag_str %></a>
       <% end %>
-        <%= image_tag review.product_image_url, class: 'smooth', alt: review.product_name, width: 90, height: 90 %>
-      </span>
-      <% end %>
+    <% end %>
   <% end %>
   <%= content_tag :div, class: "l-contents panel #{'with-image' if !hide_image} #{'photo-review' if review.images_count > 0}" do %>
     <div class="panel-heading no-border score">
+    <%= content_tag :div, class: "name #{'name-with-new-tag' if review.new?} #{'name-with-camera-icon' if review.images_count > 0}" do %>
+        <% if review.photo? %>
+          <%= content_tag :a, review.product_name, class: 'product-name photo-review-popup', data: {photo_review_popup_url: photo_review_popup_review_path(review)} %>
+        <% else %>
+          <a class="product-name link-expand"><%= review.product_name %></a>
+        <% end %>
+        <%= link_to '상품 보러가기', review.product_url, class: 'a9s_product_link' %>
+        <%= render 'reviews/tags', review: review %>
+      <% end %>
       <div class="star-wrap">
         <%= render 'reviews/score', review: review %>
       </div>
     </div>
     <div class="review-content">
       <%
-      args = {}
+      args = {class: 'review-content-inner'}
       if review.photo?
-        args[:class] = 'review-content-inner photo-review-popup'
+        args[:class] << ' photo-review-popup'
         args[:data] = {photo_review_popup_url: photo_review_popup_review_path(review)}
       else
-        args[:class] = 'review-content-inner review-content-collapsed link-expand'
+        args[:class] << ' review-content-collapsed link-expand'
       end
       %>
       <%= content_tag :a, args do %>
@@ -58,36 +66,28 @@ display_user_grade_icon = user_grade_icon_url.present? && @brand.brand_user_grad
         </div>
       <% end %>
       <div class="review-content-inner review-content-expanded"></div>
-      <a>
-        <div class="panel-heading no-border score review-content-product-name">
-          <%= content_tag :div, class: "name #{'name-with-new-tag' if review.new?} #{'name-with-camera-icon' if review.images_count > 0}" do %>
-            <a class="link-product">
-              <%= review.product_name %>
-            </a>
-            <%= render 'reviews/tags', review: review %>
-          <% end %>
-        </div>
-      </a>
     </div>
   <% end %>
   <div class="r-contents">
-    <div class="info-container">
-      <span class="name"><%= review_user_display_name(review) %></span>
-      <% if review.display_user_grade? && display_user_grade %>
-        <span class="user-grade">
-          &nbsp;
-          [
-          <% if display_user_grade_icon %>
-            <%= image_tag user_grade_icon_url, class: 'user-grade-icon' %>
-          <% end %>
-          <%= review.brand_user_grade_name %>
-          ]
-        </span>
-      <% end %>
-      <% if @brand.review_show_created_at %>
-        <span class="date"><%= review.created_at.strftime("%Y. %m. %d") %></span>
-      <% end %>
-    </div>
-    <%= render 'reviews/images', review: review %>
+    <table class="r-contents-table">
+      <tr><td><%= render 'reviews/images', review: review %></td></tr>
+      <tr><td><div class="info-container">
+        <span class="name" align="bottom"><%= review_user_display_name(review) %></span>
+        <% if review.display_user_grade? && display_user_grade %>
+          <span class="user-grade">
+            &nbsp;
+            [
+            <% if display_user_grade_icon %>
+              <%= image_tag user_grade_icon_url, class: 'user-grade-icon' %>
+            <% end %>
+            <%= review.brand_user_grade_name %>
+            ]
+          </span>
+        <% end %>
+        <% if @brand.review_show_created_at %>
+          <span class="date"><%= review.created_at.strftime("%Y. %m. %d") %></span>
+        <% end %>
+      </div></td></tr>
+  </table>
   </div>
 <% end %>

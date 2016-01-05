@@ -1,0 +1,15 @@
+<div class="panel-body no-border">
+  <%= render 'reviews/review_options', review: review, klass: 'review-options--oneline' %>
+  <%= render 'reviews/message', review: review %>
+  <%= render 'reviews/images', review: review, li_class: 'grid-4 review_expanded__thumbnail', ul_class: 'images review_expanded__thumbnails_container' %>
+</div>
+<div class="panel-footer no-border">
+  <div class="actions-container">
+    <div class="inline">
+      <a class="mall-link-color comments-link link-collapse"><%= t('reviews.close_expanded_review') %></a>
+    </div>
+    <div class="inline divider">|</div>
+    <%= render 'reviews/action_likes', review: review %>
+  </div>
+  <%= render 'reviews/comments', review: review %>
+</div>

@@ -2,10 +2,10 @@ class Reviews
   collapse = ($review_content, complete) ->
     $collapsed = $review_content.find(".review-content-collapsed").css(opacity: 0)
     $expanded = $review_content.find(".review-content-expanded").css(opacity: 1)
-    $review_content.find(".review-content-product-name").css(opacity: 0)
     $review_content.height($expanded.outerHeight())
     setTimeout (->
       $review_content.addClass("expanding")
+      $review_content.parent().find(".review-content-product-name").css(opacity: 1)
       lib.animation.fade_out $expanded, duration: "short"
       lib.animation.fade_in $collapsed, duration: "short", complete: ->
         $collapsed.css(opacity: 1)
@@ -18,7 +18,6 @@ class Reviews
             $expanded.css(opacity: "", display: "")
             $review_content.removeClass("expanding expanded").css(height: "")
             complete() if complete
-            $review_content.find(".review-content-product-name").css(opacity: 1)
           }
       ), 1
 
@@ -35,6 +34,9 @@ class Reviews
     args.elements.find(".link-expand").click ->
       $review = $(this).closest(".review")
       $review_content = $review.find(".review-content")
+      if args.elements.find(".expanded").length > 0
+        collapse args.elements.find(".expanded")
+
       if $review_content.hasClass("expanded")
         collapse($review_content) if $review_content.data("toggle")
       else
@@ -42,7 +44,6 @@ class Reviews
           if $review_content.data("filled") && $review_content.data("ready")
             $collapsed = $review_content.find(".review-content-collapsed").css(opacity: 1)
             $expanded = $review_content.find(".review-content-expanded").css(opacity: 0)
-            $review_content.find(".review-content-product-name").css(opacity: 0)
             org_height = $review_content.height()
             $review_content.height(org_height)
             $expanded.hide()
@@ -58,7 +59,7 @@ class Reviews
                     lib.animation.fade_in $expanded, duration: "short", complete: ->
                       $expanded.css(opacity: "", display: "")
                       $review_content.css(height: "").removeClass("expanding")
-                      $review_content.find(".review-content-product-name").css(opacity: 1)
+                      $review_content.parent().find(".review-content-product-name").css(opacity: 0)
                   ), 0
                 }
               ), 1
@@ -73,7 +74,6 @@ class Reviews
           # expand된 것이 있으면 우선 줄인다.
           collapse $review_content_expanded, ->
             # 줄이고 나서 늘이기 시작
-            $review_content.find(".review-content-product-name").css(opacity: 0)
             $review_content.data("ready", true)
             $review_content.trigger("review_content:loaded")
 
