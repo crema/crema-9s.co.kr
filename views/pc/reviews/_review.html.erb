@@ -48,7 +48,7 @@ display_user_grade_icon = user_grade_icon_url.present? && @brand.brand_user_grad
               <% if widget.review_message_all_collapsed? %>
                 <%= widget.collapsed_title %>
               <% else %>
-                <%= review.review_title %>
+                <%= review.message.first_line(Settings.max_review_chars_per_line).html_safe %>
               <% end %>
               <%= content_tag(:span, t('reviews.see_more'), class: 'mall-link-color see-more') if review.show_see_more? %>
               <br>
