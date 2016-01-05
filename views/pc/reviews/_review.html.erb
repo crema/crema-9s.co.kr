@@ -23,8 +23,8 @@ display_user_grade_icon = user_grade_icon_url.present? && @brand.brand_user_grad
           <%= content_tag :a, review.product_name, class: 'product-name photo-review-popup', data: {photo_review_popup_url: photo_review_popup_review_path(review)} %>
         <% else %>
           <a class="product-name link-expand"><%= review.product_name %></a>
-          <a class="product-link" href="<%= review.product_url %>">상품 보러 가기</a>
         <% end %>
+        <%= link_to '상품 보러 가기', review.product_url, class: 'product-link' %>
         <%= render 'reviews/tags', review: review %>
       <% end %>
       <div class="star-wrap">
