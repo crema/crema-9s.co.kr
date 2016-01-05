@@ -18,13 +18,13 @@ display_user_grade_icon = user_grade_icon_url.present? && @brand.brand_user_grad
   <% end %>
   <%= content_tag :div, class: "l-contents panel #{'with-image' if !hide_image} #{'photo-review' if review.images_count > 0}" do %>
     <div class="panel-heading no-border score">
-    <%= content_tag :div, class: "name #{'name-with-new-tag' if review.new?} #{'name-with-camera-icon' if review.images_count > 0}" do %>
+      <%= content_tag :div, class: "name #{'name-with-new-tag' if review.new?} #{'name-with-camera-icon' if review.images_count > 0}" do %>
         <% if review.photo? %>
           <%= content_tag :a, review.product_name, class: 'product-name photo-review-popup', data: {photo_review_popup_url: photo_review_popup_review_path(review)} %>
         <% else %>
           <a class="product-name link-expand"><%= review.product_name %></a>
         <% end %>
-        <%= link_to '상품 보러가기', review.product_url, class: 'a9s_product_link' %>
+        <%= content_tag :a, '상품 보러가기', class: 'a9s_product_link link-product', data: {product_url: review.product_url} %>
         <%= render 'reviews/tags', review: review %>
       <% end %>
       <div class="star-wrap">
@@ -48,7 +48,7 @@ display_user_grade_icon = user_grade_icon_url.present? && @brand.brand_user_grad
               <% if widget.review_message_all_collapsed? %>
                 <%= widget.collapsed_title %>
               <% else %>
-                <%= review.review_title %>
+                <%= review.message.first_line(Settings.max_review_chars_per_line).html_safe %>
               <% end %>
               <%= content_tag(:span, t('reviews.see_more'), class: 'mall-link-color see-more') if review.show_see_more? %>
               <br>
