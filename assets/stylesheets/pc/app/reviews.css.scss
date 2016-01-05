@@ -77,7 +77,8 @@ li.review {
       position: relative;
 
       .product-name {
-        display: inline;
+        display: inline-block;
+        max-width: 500px;
         color: #323232;
         white-space: nowrap;
         overflow: hidden;
