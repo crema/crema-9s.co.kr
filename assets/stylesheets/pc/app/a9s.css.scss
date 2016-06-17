@@ -6,7 +6,7 @@
   border: 1px solid #aaa;
   border-radius: 3px;
   font-size: 11px;
-  font-family: $font-default;
+  @include font-default;
   padding-left: 1px;
   padding-right: 2px;
   font-size: 10px;

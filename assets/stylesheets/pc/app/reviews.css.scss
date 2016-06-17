@@ -219,7 +219,7 @@ li.review {
     position: absolute;
     right: 0;
     top: 30px;
-    font-family: $font-default;
+    @include font-default;
 
     .name {
       font-weight: bold;
@@ -459,7 +459,7 @@ li.review {
   .title {
     margin-right: 12px;
     color: #7b7b7b;
-    font-family: $font-default;
+    @include font-default;
   }
 
   &.liked .link-like, &.unliked .link-unlike {
