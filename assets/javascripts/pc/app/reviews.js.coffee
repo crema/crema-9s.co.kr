@@ -261,12 +261,12 @@ $(document).on "change", "select#category", ->
   url_builder.add_param("category_id", category_id) if category_id
   $.getScript(url_builder.build())
 
-$(document).on "change", "select#sort_type", ->
+$(document).on "change", "select#sort", ->
   $select = $(this)
   url = $select.data("url")
   url_builder = new UrlBuilder(url)
-  order = $select.val()
-  url_builder.add_param("order", order) if order
+  sort = $select.val()
+  url_builder.add_param("sort", sort) if sort
   $.getScript(url_builder.build())
 
 format_select_rating = (item) ->
