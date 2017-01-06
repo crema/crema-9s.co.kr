@@ -289,10 +289,6 @@ $(document).on "history:updated", (e, elements) ->
       escapeMarkup: (m) -> m
       })
 
-$(document).on "click", ".link-fullscreen-popup", ->
-  app.window.photo_review_popup $(this).data("url")
-  app.reviews.review_popup_loader $(this)
-
 $(document).on "click", ".delete-review, .edit-review, .new_review, .review-edit-close", ->
   $old_form = $("#review-edit-form")
   if $old_form.length > 0
