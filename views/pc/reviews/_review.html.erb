@@ -21,7 +21,7 @@ display_user_grade_icon = user_grade_icon_url.present? && @brand.brand_user_grad
     <div class="panel-heading no-border score">
       <%= content_tag :div, class: "name #{'name-with-new-tag' if review.new?} #{'name-with-camera-icon' if review.images_count > 0}" do %>
         <% if review.photo? %>
-          <%= content_tag :a, review.product_name, class: 'product-name photo-review-popup', data: {photo_review_popup_url: photo_review_popup_review_path(review)} %>
+          <%= content_tag :a, review.product_name, class: 'product-name link-fullscreen-popup', data: {url: photo_review_popup_review_path(review)} %>
         <% else %>
           <a class="product-name link-expand"><%= review.product_name %></a>
         <% end %>
@@ -35,8 +35,8 @@ display_user_grade_icon = user_grade_icon_url.present? && @brand.brand_user_grad
       <%
       args = {class: 'review-content-inner'}
       if review.photo?
-        args[:class] << ' photo-review-popup'
-        args[:data] = {photo_review_popup_url: photo_review_popup_review_path(review)}
+        args[:class] << ' link-fullscreen-popup'
+        args[:data] = {url: photo_review_popup_review_path(review)}
       else
         args[:class] << ' review-content-collapsed link-expand'
       end
