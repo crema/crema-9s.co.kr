@@ -5,12 +5,12 @@ user_grade_icon_url = review.user_grade_icon_url
 display_user_grade = @brand.review_author_display_type == ReviewAuthorDisplayType::USER_GRADE && @brand.brand_user_grade_display_type_in_reviews_index != BrandUserGradeDisplayType::NONE
 display_user_grade_icon = user_grade_icon_url.present? && @brand.brand_user_grade_display_type_in_reviews_index == BrandUserGradeDisplayType::TEXT_WITH_ICON
 %>
-<%= content_tag_for :li, review, data: {product_url: product_url, expand_url: expand_review_path(review, widget_id: widget.id)} do %>
+<%= content_tag_for :li, review, data: {expand_url: expand_review_path(review, widget_id: widget.id)} do %>
   <% if !hide_image %>
     <% if product_url %>
-      <a class="image link-product">
+      <%= content_tag :a, class: 'image link-product link-iframe', data: {url: product_url} do %>
         <%= image_tag review.product_image_url, class: 'smooth', alt: review.product_name, width: 90, height: 90 %>
-      </a>
+      <% end %>
     <% else %>
       <span class="image">
         <%= image_tag review.product_image_url, class: 'smooth', alt: review.product_name, width: 90, height: 90 %>
